@@ -11,13 +11,13 @@ import csv
 families = []
 students = []
 
-with open('users (1).csv',newline='') as csvfile:
+with open('test_users (1).csv',newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         line = [row['\ufeffID'], row['First name']+' '+row['Last name']]
         families.append(line)
 
-with open('users.csv',newline='') as csvfile:
+with open('test_users.csv',newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         line = [row['\ufeffID'], row['First name']+' '+row['Last name'], row['Client ID'], row['Client Name']]
@@ -49,9 +49,11 @@ for family in families:
         if (index%2) == 0:
             links[index].click()
             d_elem = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME,'doc-download-link')))
-            d_elem.click()
-            d_link = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT,'Click here to download')))
-            d_link.click()
+            file_name = driver.find_element(By.TAG_NAME,'h1').text
+            if not('Notice of Assessment' in file_name or 'NOA ' in file_name):
+                d_elem.click()
+                d_link = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT,'Click here to download')))
+                d_link.click()
             driver.back()
             time.sleep(2)
 
@@ -75,9 +77,11 @@ for student in students:
         if (index%2) == 0:
             links[index].click()
             d_elem = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME,'doc-download-link')))
-            d_elem.click()
-            d_link = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT,'Click here to download')))
-            d_link.click()
+            file_name = driver.find_element(By.TAG_NAME,'h1').text
+            if not('Notice of Assessment' in file_name or 'NOA ' in file_name):
+                d_elem.click()
+                d_link = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT,'Click here to download')))
+                d_link.click()
             driver.back()
             time.sleep(2)
 
